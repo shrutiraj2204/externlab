@@ -1,0 +1,37 @@
+<script>
+function fetchDown (url, saveas) {
+ 
+  fetch(url)
+ 
+  
+  .then((result) => {
+    if (result.status != 200) { throw new Error("Bad server response"); }
+    return result.blob();
+  })
+ 
+ 
+  .then((data) => {
+    
+    console.log(data);
+ 
+    
+    var url = window.URL.createObjectURL(data),
+    anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = saveas;
+    anchor.click();
+ 
+    
+    window.URL.revokeObjectURL(url);
+    document.removeChild(anchor);
+  })
+ 
+  
+  .catch((error) => { console.log(error); });
+}
+</script>
+ 
+<input type="button" value="Download"
+       onclick="fetchDown('localhost:3000/download/API.docx', 'imporatant.docx')"/>"
+      
+       
